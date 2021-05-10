@@ -1,22 +1,26 @@
 import React from 'react';
-import './App.css';
+
 import { Header } from './components/Header';
 import { Balances } from './components/Balances';
 import { IncomeConsumption } from './components/IncomeConsumption';
-import { Transaction } from './components/Transaction';
+import { TransactionList } from './components/TransactionList';
 import { AddTransaction } from './components/AddTransaction';
+import { GlobalProvider } from './context/GlobalState';
+
+import './App.css';
+
 
 function App() {
   return (
-<div>
+<GlobalProvider>
         <Header />
               <div className="container">
         <Balances />
         <IncomeConsumption />
-        <Transaction />
+        <TransactionList />
         <AddTransaction />
         </div>
-        </div>
+        </GlobalProvider>
 
   );
 }
