@@ -4,10 +4,12 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
+const passport = require('passport');
 
 dotenv.config({path: './config/config.env'});
 
 connectDB();
+
 
 const transactions = require('./routes/transactionRouter');
 const { getTransactions } = require('./controllers/transactionController');
@@ -19,9 +21,13 @@ app.use(express.json());
 if(process.env.NODE_ENV ==='development'){
     app.use(morgan('dev'));
 }
+app.use(passport.initialize())
+require('./passport')(passport)
 
+app.use('/api/users', require('./routes/userRouter'))
 
 app.use('/api/v1/transactions', transactions);
+
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
